@@ -30,7 +30,7 @@ async def on_message(message):
             output = "Tails"
         await message.reply(":coin: | " + output)
 
-@client.command()
+@client.event
 async def args(message, usr,*, amount):
     if message.author == client.user:
         return
