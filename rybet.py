@@ -29,14 +29,12 @@ async def on_message(message):
         else:
             output = "Tails"
         await message.reply(":coin: | " + output)
-
-@client.event #depo/withdraw
 async def args(message, usr, amount):
     if message.author == client.user:
         return
     
     if message.author.id == 762737260617269268:
-        if message.content.startswith('$deposit') or message.content.startswith('$depo'):
+        if message.content.startswith('$deposit'):
             await message.reply('Added: ' + amount + " to <@" + usr.id + "> balance")
 
 client.run(TOKEN)
