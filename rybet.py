@@ -1,8 +1,11 @@
+# This example requires the 'message_content' intent.
+import os
 import discord
 
-intents = discord.Intents.default()
-intents.message_content = True
+token = os.getenv("DISCORD_TOKEN")
+my_guild = os.getenv("DISCORD_GUILD")
 
+intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
 @client.event
@@ -17,4 +20,4 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
 
-client.run('MTAzNDU5MTY4MjE1MjM3MDI2Ng.Gu-foq.mXTq6pNRRfEXKxmG75T7maG7oeygc0VvlhUwno')
+client.run(token)
