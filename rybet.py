@@ -22,7 +22,7 @@ async def on_message(message):
     if message.content.startswith('$ping'):
         await message.channel.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
-    if message.content.startswith('$coinflip'):
+    if message.content.startswith('$coinflip') or message.content.startswith('$coin'):
         choice = random.getrandbits(1)
         if choice:
             output = "Heads"
@@ -30,7 +30,7 @@ async def on_message(message):
             output = "Tails"
         await message.reply(":coin: | " + output)
 
-    if message.content.startswith('$diethrow'):
+    if message.content.startswith('$diethrow') or message.content.startswith('$die'):
         choice = random.randint(1,6)
         await message.reply(":game_die: | " + str(choice))
 
@@ -42,7 +42,7 @@ async def on_message(message):
         if choice > 0.5:
             state = "win"
             emoji = ":white_check_mark:"
-        output = str(choice * 100) + "%"
+        output = str(round(choice * 100, 3)) + "%"
         await message.reply(emoji + " | " + output)
     
 
