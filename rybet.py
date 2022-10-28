@@ -32,7 +32,7 @@ async def on_message(message):
 
     if message.content.startswith('$diethrow'):
         choice = random.randint(1,6)
-        await message.reply(":game_die: | " + choice)
+        await message.reply(":game_die: | " + str(choice))
 
     if message.content.startswith('$dice'):
         choice = random.random()
