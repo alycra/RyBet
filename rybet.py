@@ -30,4 +30,20 @@ async def on_message(message):
             output = "Tails"
         await message.reply(":coin: | " + output)
 
+    if message.content.startswith('$diethrow'):
+        choice = random.randint(1,6)
+        await message.reply(":game_die: | " + choice)
+
+    if message.content.startswith('$dice'):
+        choice = random.random()
+        if choice <= 0.5:
+            state = "Loss"
+            emoji = ":x:"
+        if choice > 0.5:
+            state = "win"
+            emoji = ":white_check_mark:"
+        output = str(choice * 100) + "%"
+        await message.reply(emoji + " | " + output)
+    
+
 client.run(TOKEN)
