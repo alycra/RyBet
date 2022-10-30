@@ -50,6 +50,7 @@ async def on_message(message):
                 await message.reply(':game_die: | ' + str(choice))
         except:
             await message.reply('Incorect usage of command, use $help for correct usage')
+    await client.process_commands(message)
 
 @client.command() #ping command
 async def ping(ctx):
@@ -112,7 +113,7 @@ async def dice(ctx, user_choice : float = None, amount : float = None):
         elif bot_choice > 0.5:
             state = 'win'
             emoji = ':white_check_mark:'
-        await message.reply(emoji + ' | ' + output)
+        await message.reply(emoji + ' | ' + state + ' | ' + output)
 
 
 
