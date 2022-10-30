@@ -25,31 +25,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$coinflip') or message.content.startswith('$coin') or message.content.startswith('$flip'):
-        try:
-            bot_choice = random.getrandbits(1) #generate random bot number of 1 or 0
-            if bot_choice: #apply a result to the number
-                output = "Heads"
-            else:
-                output = "Tails"
-            if len(content) == 3: #if there is the standard template: $cmd tag1 tag2
-                if content[1] == "heads" or content[1] == "head": #taking the user input and converting it to binary
-                    user_choice = 1
-                elif content[1] == "tails" or content[1] == "tail":
-                    user_choice = 0
-                if user_choice == bot_choice: #if the users choice is the same as the bot
-                    result = float(content[2]) * 2
-                    await message.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
-                else: #if the users choice is not the same as the bot
-                    result = float(content[2]) * -1
-                    await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
-            elif len(content) > 1:
-                await message.reply("Incorrect usage, correct template: $coinflip heads 0.25")
-            else:
-                await message.reply(":coin: | " + output)
-        except:
-            await message.reply("Incorect usage of commant, use $help for correct usage")
-
     if message.content.startswith('$dicethrow') or message.content.startswith('$die'):
         try:
             bot_choice = random.randint(1,6)
@@ -84,9 +59,29 @@ async def on_message(message):
         await message.reply(emoji + " | " + output)
     await client.process_commands(message)
 
-@client.command()
+@client.command() #ping command
 async def ping(ctx):
-    print("ping requested")
     await ctx.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
+
+@client.command() #coinflip
+async def coinflip(ctx, user_choice: None, input: None):
+    bot_choice = random.getrandbits(1) #generate random bot number of 1 or 0
+    if bot_choice: #apply a result to the number
+        output = "Heads"
+    else:
+        output = "Tails"
+    if user_choice is None:
+        await message.reply(":coin: | " + output)
+    else:
+        if content[1] == "heads" or content[1] == "head": #taking the user input and converting it to binary
+            user_choice = 1
+        elif content[1] == "tails" or content[1] == "tail":
+            user_choice = 0
+        if user_choice == bot_choice: #if the users choice is the same as the bot
+            result = float(content[2]) * 2
+            await message.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
+        else: #if the users choice is not the same as the bot
+            result = float(content[2]) * -1
+            await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
 
 client.run(TOKEN)
