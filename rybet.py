@@ -1,39 +1,90 @@
-#rybet.py
-
-#importing all the libaries used
+from aiohttp import content_disposition_filename
 import discord
-import discord.utils
-from discord.ext import commands
+import random
 import os
 from dotenv import load_dotenv
-import random
-
-#setting up the core information from the bot
+from discord.utils import get
+intents = discord.Intents.default()
+intents.message_content = True
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
-bot = commands.Bot(command_prefix='$', description="RyBet's bot")
 
-#Automatic rules for when the bot is active
-@bot.event
+client = discord.Client(intents=intents)
+
+@client.event
 async def on_ready():
-    print("Rybet is online as" + bot.user.name + " | " + bot.user.id)
+    print(f'We have logged in as {client.user}')
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="RyBet's poker table"))
 
-#automatically grant new members a standard role
-@bot.event(pass_context=True)
-async def on_member_join(member):
-    role = discord.utils.get(member.guild.roles, name="Player")
-    await  bot.add_roles(member, role)
+@client.event
+async def on_message(message):
+    username = str(message.author).split("#")[0]
+    channel = str(message.channel.name)
+    content = str(message.content).lower().split()
 
-#standard coinflip
-@bot.command()
-async def coinflip(ctx):
-    choice = random.getrandbits(1)
-    if choice:
-        output = "Heads"
-    else:
-        output = "Tails"
-    await ctx.reply(":coin: | " + output)
+    if message.author == client.user:
+        return
+    
+    if message.content.startswith('$ping'):
+        await message.channel.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
+    if message.content.startswith('$coinflip') or message.content.startswith('$coin') or message.content.startswith('$flip'):
+        try:
+            bot_choice = random.getrandbits(1)
+            if bot_choice:
+                output = "Heads"
+            else:
+                output = "Tails"
+            if len(content) == 3
+                if content[1] == "heads" or content[1] == "head":
+                    user_choice = 1
+                elif content[1] == "tails" or content[1] == "tail":
+                    user_choice = 0
+                if user_choice == bot_choice:
+                    result = float(content[2]) * 2
+                    await message.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
+                else:
+                    result = float(content[2]) * -1
+                    await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
+            elif len(content) > 1:
+                await message.reply("Incorrect usage, correct template: $coinflip heads 0.25")
+            else:
+                await message.reply(":coin: | " + output)
+        except:
+            await message.reply("Incorect usage of commant, use $help for correct usage")
 
-#activating the bot
-bot.run(TOKEN)
+    if message.content.startswith('$dicethrow') or message.content.startswith('$die'):
+        try:
+            bot_choice = random.randint(1,6)
+            if len(content) == 3:
+                user_choice = int(content[1])
+                if 1 <= user_choice <=6:
+                    if bot_choice == user_choice:
+                        result = float(content[2]) * 3
+                        await message.reply(":game_die: " + str(bot_choice) + " | :white_check_mark: Player: " + username + " wins | $" + result)
+                    else:
+                        result = float(content[2]) * -1
+                        await message.reply(":x: " + str(bot_choice) + " | :x: House wins | $" + result)
+                else:
+                    await message.reply("Incorrect number range, for a dice: 1-6")
+            elif len(content) > 1:
+                await message.reply("Incorrect usage, correct template: $dicethrow 5 0.25")
+            else:
+                choice = random.randint(1,6)
+                await message.reply(":game_die: | " + str(choice))
+        except:
+            await message.reply("Incorect usage of commant, use $help for correct usage")
+
+    if message.content.startswith('$dice'):
+        choice = random.random()
+        if choice <= 0.5:
+            state = "Loss"
+            emoji = ":x:"
+        if choice > 0.5:
+            state = "win"
+            emoji = ":white_check_mark:"
+        output = str(round(choice * 100, 2)) + "%"
+        await message.reply(emoji + " | " + output)
+    
+
+client.run(TOKEN)
