@@ -86,9 +86,9 @@ async def coinflip(ctx, choice : str = None, amount : float = None):
                     result = amount * -1.0
                     await ctx.reply(':coin: '+ output +' | :x: House wins | $' + str(result))
             except:
-                await message.reply('Incorect usage of command, use $help for correct usage')
+                await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
-            await message.reply('Please specifiy a bet wager')
+            await ctx.reply('Please specifiy a bet wager')
     else:
         await ctx.reply(':coin: | ' + output)
 
