@@ -72,7 +72,7 @@ async def coinflip(ctx, choice : str = None, amount : str = None):
         output = "Heads"
     else:
         output = "Tails"
-    if choice is None and amount is None:
+    if choice != None and amount != None:
         if choice is "heads" or choice is "head": #taking the user input and converting it to binary
             user_choice = 1
         elif choice is "tails" or choice is "tail":
