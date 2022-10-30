@@ -77,11 +77,11 @@ async def coinflip(ctx, *content):
             user_choice = 0
         if user_choice == bot_choice: #if the users choice is the same as the bot
             result = float(content[1]) * 2
-            await message.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
+            await ctx.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
         else: #if the users choice is not the same as the bot
             result = float(content[1]) * -1
-            await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
+            await ctx.reply(":coin: "+ output +" | :x: House wins | $" + result)
     else:
-        await message.reply(":coin: | " + output)
+        await ctx.reply(":coin: | " + output)
 
 client.run(TOKEN)
