@@ -1,15 +1,16 @@
-from aiohttp import content_disposition_filename
 import discord
 import random
 import os
 from dotenv import load_dotenv
 from discord.utils import get
+from discord.ext import commands
 intents = discord.Intents.default()
 intents.message_content = True
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 client = discord.Client(intents=intents)
+client = commands.Bot(command_prefix="$")
 
 @client.event
 async def on_ready():
@@ -24,26 +25,23 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-    
-    if message.content.startswith('$ping'):
-        await message.channel.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
     if message.content.startswith('$coinflip') or message.content.startswith('$coin') or message.content.startswith('$flip'):
         try:
-            bot_choice = random.getrandbits(1)
-            if bot_choice:
+            bot_choice = random.getrandbits(1) #generate random bot number of 1 or 0
+            if bot_choice: #apply a result to the number
                 output = "Heads"
             else:
                 output = "Tails"
-            if len(content) == 3:
-                if content[1] == "heads" or content[1] == "head":
+            if len(content) == 3: #if there is the standard template: $cmd tag1 tag2
+                if content[1] == "heads" or content[1] == "head": #taking the user input and converting it to binary
                     user_choice = 1
                 elif content[1] == "tails" or content[1] == "tail":
                     user_choice = 0
-                if user_choice == bot_choice:
+                if user_choice == bot_choice: #if the users choice is the same as the bot
                     result = float(content[2]) * 2
                     await message.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
-                else:
+                else: #if the users choice is not the same as the bot
                     result = float(content[2]) * -1
                     await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
             elif len(content) > 1:
@@ -73,7 +71,7 @@ async def on_message(message):
                 choice = random.randint(1,6)
                 await message.reply(":game_die: | " + str(choice))
         except:
-            await message.reply("Incorect usage of commant, use $help for correct usage")
+            await message.reply("Incorect usage of command, use $help for correct usage")
 
     if message.content.startswith('$dice'):
         choice = random.random()
@@ -85,6 +83,8 @@ async def on_message(message):
             emoji = ":white_check_mark:"
         output = str(round(choice * 100, 2)) + "%"
         await message.reply(emoji + " | " + output)
-    
+@client.command()
+async def ping(ctx):
+    await ctx.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
 client.run(TOKEN)
