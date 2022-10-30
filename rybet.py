@@ -90,7 +90,7 @@ async def dice(ctx, user_choice : float = None, amount : float = None):
     if user_choice != None:
         if amount != None:
             try:
-                user_choice = 1.0 - (user_choice/100)
+                user_choice = 1.0 - (user_choice/100.0)
                 if user_choice <= bot_choice:
                     state = 'Loss'
                     message = 'House wins'
