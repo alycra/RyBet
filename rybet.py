@@ -85,6 +85,7 @@ async def coinflip(ctx, choice : str = None, amount : float = None):
 @client.command()
 async def dice(ctx, user_choice : float = None, amount : float = None):
     bot_choice = random.random()
+    output = str(round(bot_choice * 100, 2)) + '%'
     if user_choice != None:
         if amount != None:
             try:
@@ -99,20 +100,18 @@ async def dice(ctx, user_choice : float = None, amount : float = None):
                     message = 'Player wins'
                     emoji = ':white_check_mark:'
                     result = amount / user_choice
-                output = str(round(choice * 100, 2)) + '%'
                 await message.reply(emoji + ' | ' + message + ' | $' + result)
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
             await ctx.reply('Please specifiy a bet wager')
     else:
-        if choice <= 0.5:
+        if bot_choice <= 0.5:
             state = 'Loss'
             emoji = ':x:'
-        elif choice > 0.5:
+        elif bot_choice > 0.5:
             state = 'win'
             emoji = ':white_check_mark:'
-        output = str(round(choice * 100, 2)) + '%'
         await message.reply(emoji + ' | ' + output)
 
 
