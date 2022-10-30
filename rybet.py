@@ -42,7 +42,7 @@ async def on_message(message):
         if choice > 0.5:
             state = "win"
             emoji = ":white_check_mark:"
-        output = str(round(choice * 100, 3)) + "%"
+        output = str(round(choice * 100, 2)) + "%"
         await message.reply(emoji + " | " + output)
     
 
