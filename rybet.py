@@ -75,9 +75,9 @@ async def coinflip(ctx, choice : str = None, amount : float = None):
     if choice != None:
         if amount != None:
             try:
-                if choice is 'heads' or choice is 'head': #taking the user input and converting it to binary
+                if choice == 'heads' or choice == 'head': #taking the user input and converting it to binary
                     user_choice = 1
-                elif choice is 'tails' or choice is 'tail':
+                elif choice == 'tails' or choice == 'tail':
                     user_choice = 0
                 if user_choice == bot_choice: #if the users choice is the same as the bot
                     result = amount * 2.0
