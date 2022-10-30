@@ -9,6 +9,8 @@ intents.message_content = True
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
+ADMIN = "762737260617269268"
+
 client = commands.Bot(command_prefix="$", intents=intents)
 
 @client.event
@@ -64,13 +66,13 @@ async def ping(ctx):
     await ctx.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
 @client.command() #coinflip
-async def coinflip(ctx, *content):
+async def coinflip(ctx, choice : str = None, amount : str = None):
     bot_choice = random.getrandbits(1) #generate random bot number of 1 or 0
     if bot_choice: #apply a result to the number
         output = "Heads"
     else:
         output = "Tails"
-    if content[0]:
+    if choice is None and amount is None:
         if content[0] == "heads" or content[0] == "head": #taking the user input and converting it to binary
             user_choice = 1
         elif content[0] == "tails" or content[0] == "tail":
