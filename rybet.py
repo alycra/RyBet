@@ -26,7 +26,9 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-
+    if message.contents.startswith('$scam'):
+        await message.reply("https://cdn.discordapp.com/attachments/1034515302446268446/1036332161827078144/videoplayback.mp4")
+        
     if message.content.startswith('$dicethrow') or message.content.startswith('$die'):
         try:
             bot_choice = random.randint(1,6)
@@ -91,5 +93,10 @@ async def coinflip(ctx, choice : str = None, amount : float = None):
             await ctx.reply('Please specifiy a bet wager')
     else:
         await ctx.reply(':coin: | ' + output)
+
+@client.command()
+async def dice(ctx, user_choice : str = None, amount : float = None):
+    bot_choice = random.random()
+
 
 client.run(TOKEN)
