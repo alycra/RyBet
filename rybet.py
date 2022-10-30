@@ -68,21 +68,25 @@ async def ping(ctx):
 @client.command() #coinflip
 async def coinflip(ctx, choice : str = None, amount : str = None):
     bot_choice = random.getrandbits(1) #generate random bot number of 1 or 0
+    user_choice = -1
     if bot_choice: #apply a result to the number
         output = "Heads"
     else:
         output = "Tails"
     if choice != None and amount != None:
-        if choice is "heads" or choice is "head": #taking the user input and converting it to binary
-            user_choice = 1
-        elif choice is "tails" or choice is "tail":
-            user_choice = 0
-        if user_choice == bot_choice: #if the users choice is the same as the bot
-            result = amount * 2
-            await ctx.reply(":coin: "+ output +" | :white_check_mark: Player Wins | $" + result)
-        else: #if the users choice is not the same as the bot
-            result = amount * -1
-            await ctx.reply(":coin: "+ output +" | :x: House wins | $" + result)
+        try:
+            if choice is "heads" or choice is "head": #taking the user input and converting it to binary
+                user_choice = 1
+            elif choice is "tails" or choice is "tail":
+                user_choice = 0
+            if user_choice == bot_choice: #if the users choice is the same as the bot
+                result = amount * 2
+                await ctx.reply(":coin: "+ output +" | :white_check_mark: Player Wins | $" + result)
+            else: #if the users choice is not the same as the bot
+                result = amount * -1
+                await ctx.reply(":coin: "+ output +" | :x: House wins | $" + result)
+        except:
+            await message.reply("Incorect usage of command, use $help for correct usage")
     else:
         await ctx.reply(":coin: | " + output)
 
