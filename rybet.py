@@ -82,8 +82,10 @@ async def on_message(message):
             emoji = ":white_check_mark:"
         output = str(round(choice * 100, 2)) + "%"
         await message.reply(emoji + " | " + output)
+
 @client.command()
 async def ping(ctx):
+    print("ping requested")
     await ctx.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
 client.run(TOKEN)
