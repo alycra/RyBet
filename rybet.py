@@ -73,15 +73,15 @@ async def coinflip(ctx, choice : str = None, amount : str = None):
     else:
         output = "Tails"
     if choice is None and amount is None:
-        if content[0] == "heads" or content[0] == "head": #taking the user input and converting it to binary
+        if choice is "heads" or choice is "head": #taking the user input and converting it to binary
             user_choice = 1
-        elif content[0] == "tails" or content[0] == "tail":
+        elif choice is "tails" or choice is "tail":
             user_choice = 0
         if user_choice == bot_choice: #if the users choice is the same as the bot
-            result = content[1] * 2
+            result = amount * 2
             await ctx.reply(":coin: "+ output +" | :white_check_mark: Player Wins | $" + result)
         else: #if the users choice is not the same as the bot
-            result = content[1] * -1
+            result = amount * -1
             await ctx.reply(":coin: "+ output +" | :x: House wins | $" + result)
     else:
         await ctx.reply(":coin: | " + output)
