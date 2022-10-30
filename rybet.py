@@ -22,10 +22,6 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    username = str(message.author).split('#')[0]
-    channel = str(message.channel.name)
-    content = str(message.content).lower().split()
-
     if message.author == client.user:
         return
     if message.content.startswith('$scam'):
@@ -55,12 +51,10 @@ async def coinflip(ctx, choice: str = None, amount: float = None):
                 if user_choice == bot_choice:  # if the users choice is the same as the bot
                     result = amount * 2.0
                     emoji = ':white_check_mark:'
-                    state = 'Win'
                 else:  # if the users choice is not the same as the bot
                     result = amount * -1.0
                     emoji = ':x:'
-                    state = 'Loss'
-                await ctx.reply(':coin: | ' + emoji + ' | ' + message + ' | $' + str(result))
+                await ctx.reply(':coin: | ' + emoji + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
@@ -79,27 +73,23 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
                 user_choice = user_choice/100.0
                 if user_choice <= bot_choice:
                     state = 'Loss'
-                    message = 'House wins'
                     emoji = ':x:'
                     result = amount * -1.0
                 elif user_choice > bot_choice:
                     state = 'win'
-                    message = 'Player wins'
                     emoji = ':white_check_mark:'
                     result = amount / user_choice
-                await ctx.reply(':signal_strength: | ' + emoji + ' | ' + message + ' | $' + str(result))
+                await ctx.reply(':signal_strength: | ' + emoji + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
             await ctx.reply('Please specifiy a bet wager')
     else:
         if bot_choice <= 0.5:
-            state = 'Loss'
             emoji = ':x:'
         elif bot_choice > 0.5:
-            state = 'Win'
             emoji = ':white_check_mark:'
-        await ctx.reply(':signal_strength: | ' + emoji + ' | ' + state + ' | ' + output)
+        await ctx.reply(':signal_strength: | ' + emoji + ' | ' + output)
 
 
 @client.command()  # dicethrow
@@ -109,14 +99,12 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
         if amount != None:
             try:
                 if user_choice == bot_choice:
-                    state = 'Win'
                     emoji = ':white_check_mark:'
                     result = amount * 6.0
                 else:
-                    state = 'Loss'
                     emoji = ':x:'
                     result = amount * -1.0
-                await ctx.reply(':game_die: | ' + emoji + ' | ' + message + ' | $' + str(result))
+                await ctx.reply(':game_die: | ' + emoji + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
