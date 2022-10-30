@@ -9,7 +9,7 @@ intents.message_content = True
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-client = commands.Bot(command_prefix="$", intents=discord.Intents.default())
+client = commands.Bot(command_prefix="$", intents=intents)
 
 @client.event
 async def on_ready():
