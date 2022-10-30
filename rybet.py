@@ -16,7 +16,7 @@ client = commands.Bot(command_prefix='$', intents=intents)
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='RyBet's poker table'))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="RyBet's poker table"))
 
 @client.event
 async def on_message(message):
