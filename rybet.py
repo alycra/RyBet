@@ -64,24 +64,24 @@ async def ping(ctx):
     await ctx.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
 
 @client.command() #coinflip
-async def coinflip(ctx, user_choice: None, input: None):
+async def coinflip(ctx, *content):
     bot_choice = random.getrandbits(1) #generate random bot number of 1 or 0
     if bot_choice: #apply a result to the number
         output = "Heads"
     else:
         output = "Tails"
-    if user_choice is None:
+    if content[0]:
         await message.reply(":coin: | " + output)
     else:
-        if content[1] == "heads" or content[1] == "head": #taking the user input and converting it to binary
+        if content[0] == "heads" or content[0] == "head": #taking the user input and converting it to binary
             user_choice = 1
-        elif content[1] == "tails" or content[1] == "tail":
+        elif content[0] == "tails" or content[0] == "tail":
             user_choice = 0
         if user_choice == bot_choice: #if the users choice is the same as the bot
-            result = float(content[2]) * 2
+            result = float(content[1]) * 2
             await message.reply(":coin: "+ output +" | :white_check_mark: Player: " + username + "Wins | $" + result)
         else: #if the users choice is not the same as the bot
-            result = float(content[2]) * -1
+            result = float(content[1]) * -1
             await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
 
 client.run(TOKEN)
