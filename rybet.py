@@ -118,7 +118,7 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
 async def deposit(ctx, user_id: int = None, amount: float = None):
     if user_id != None:
         if amount != None:
-
+            return
         else:
             await ctx.reply('Please specifiy an amount')
     else:
