@@ -116,7 +116,7 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
                     state = 'Loss'
                     emoji = ':x:'
                     result = amount * -1.0
-            await ctx.reply(':game_die: | ' + emoji + ' | ' + message + ' | $' + str(result))
+                await ctx.reply(':game_die: | ' + emoji + ' | ' + message + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
