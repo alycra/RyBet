@@ -71,8 +71,6 @@ async def coinflip(ctx, *content):
     else:
         output = "Tails"
     if content[0]:
-        await message.reply(":coin: | " + output)
-    else:
         if content[0] == "heads" or content[0] == "head": #taking the user input and converting it to binary
             user_choice = 1
         elif content[0] == "tails" or content[0] == "tail":
@@ -83,5 +81,7 @@ async def coinflip(ctx, *content):
         else: #if the users choice is not the same as the bot
             result = float(content[1]) * -1
             await message.reply(":coin: "+ output +" | :x: House wins | $" + result)
+    else:
+        await message.reply(":coin: | " + output)
 
 client.run(TOKEN)
