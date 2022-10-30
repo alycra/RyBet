@@ -26,9 +26,9 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-    if message.contents.startswith('$scam'):
+    if message.content.startswith('$scam'):
         await message.reply("https://cdn.discordapp.com/attachments/1034515302446268446/1036332161827078144/videoplayback.mp4")
-        
+
     if message.content.startswith('$dicethrow') or message.content.startswith('$die'):
         try:
             bot_choice = random.randint(1,6)
