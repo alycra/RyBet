@@ -35,7 +35,7 @@ async def on_message(message):
                 output = "Heads"
             else:
                 output = "Tails"
-            if len(content) == 3
+            if len(content) == 3:
                 if content[1] == "heads" or content[1] == "head":
                     user_choice = 1
                 elif content[1] == "tails" or content[1] == "tail":
