@@ -7,10 +7,11 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.message_content = True
 load_dotenv()
+
+
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 ADMIN = '762737260617269268'
-
 client = commands.Bot(command_prefix='$', intents=intents)
 
 
@@ -36,22 +37,22 @@ async def ping(ctx):
 
 @client.command()  # coinflip
 async def coinflip(ctx, choice: str = None, amount: float = None):
-    bot_choice = random.getrandbits(1)  # generate random bot number of 1 or 0
-    if bot_choice:  # apply a result to the number
+    bot_choice = random.getrandbits(1)
+    if bot_choice:
         output = 'Heads'
     else:
         output = 'Tails'
     if choice != None:
         if amount != None:
             try:
-                if choice == 'heads' or choice == 'head':  # taking the user input and converting it to binary
+                if choice == 'heads' or choice == 'head':
                     user_choice = 1
                 elif choice == 'tails' or choice == 'tail':
                     user_choice = 0
-                if user_choice == bot_choice:  # if the users choice is the same as the bot
-                    result = amount * 2.0
+                if user_choice == bot_choice:
+                    result = amount
                     emoji = ':white_check_mark:'
-                else:  # if the users choice is not the same as the bot
+                else:
                     result = amount * -1.0
                     emoji = ':x:'
                 await ctx.reply(':coin: | ' + emoji + ' | $' + str(result))
@@ -78,7 +79,7 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
                 elif user_choice > bot_choice:
                     state = 'win'
                     emoji = ':white_check_mark:'
-                    result = amount / user_choice
+                    result = (amount / user_choice) - amount
                 await ctx.reply(':signal_strength: | ' + emoji + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
@@ -100,7 +101,7 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
             try:
                 if user_choice == bot_choice:
                     emoji = ':white_check_mark:'
-                    result = amount * 6.0
+                    result = amount * 5.0
                 else:
                     emoji = ':x:'
                     result = amount * -1.0
@@ -112,4 +113,14 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
     else:
         await ctx.reply(':game_die: | ' + str(bot_choice))
 
+
+@client.command()  # depo
+async def deposit(ctx, user_id: int = None, amount: float = None):
+    if user_id != None:
+        if amount != None:
+
+        else:
+            await ctx.reply('Please specifiy an amount')
+    else:
+        await ctx.reply('Incorect usage of command, use $help for correct usage')
 client.run(TOKEN)
