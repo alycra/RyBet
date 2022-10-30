@@ -1,49 +1,39 @@
+#rybet.py
+
+#importing all the libaries used
 import discord
-import random
+import discord.utils
+from discord.ext import commands
 import os
 from dotenv import load_dotenv
-intents = discord.Intents.default()
-intents.message_content = True
+import random
+
+#setting up the core information from the bot
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
+bot = commands.Bot(command_prefix='$', description="RyBet's bot")
 
-client = discord.Client(intents=intents)
-
-@client.event
+#Automatic rules for when the bot is active
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="RyBet's poker table"))
+    print("Rybet is online as" + bot.user.name + " | " + bot.user.id)
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-        
-    if message.content.startswith('$ping'):
-        await message.channel.send(":ping_pong: | " + str(round(client.latency,2)) + "ms")
+#automatically grant new members a standard role
+@bot.event(pass_context=True)
+async def on_member_join(member):
+    role = discord.utils.get(member.guild.roles, name="Player")
+    await  bot.add_roles(member, role)
 
-    if message.content.startswith('$coinflip') or message.content.startswith('$coin'):
-        choice = random.getrandbits(1)
-        if choice:
-            output = "Heads"
-        else:
-            output = "Tails"
-        await message.reply(":coin: | " + output)
+#standard coinflip
+@bot.command()
+async def coinflip(ctx):
+    choice = random.getrandbits(1)
+    if choice:
+        output = "Heads"
+    else:
+        output = "Tails"
+    await ctx.reply(":coin: | " + output)
 
-    if message.content.startswith('$diethrow') or message.content.startswith('$die'):
-        choice = random.randint(1,6)
-        await message.reply(":game_die: | " + str(choice))
 
-    if message.content.startswith('$dice'):
-        choice = random.random()
-        if choice <= 0.5:
-            state = "Loss"
-            emoji = ":x:"
-        if choice > 0.5:
-            state = "win"
-            emoji = ":white_check_mark:"
-        output = str(round(choice * 100, 2)) + "%"
-        await message.reply(emoji + " | " + output)
-    
-
-client.run(TOKEN)
+#activating the bot
+bot.run(TOKEN)
