@@ -102,8 +102,9 @@ async def dice(ctx, user_choice : float = None, amount : float = None):
                     emoji = ':white_check_mark:'
                     result = amount / user_choice
                 await ctx.reply(emoji + ' | ' + message + ' | $' + result)
-            except:
+            except Exception as e:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
+                print (e)
         else:
             await ctx.reply('Please specifiy a bet wager')
     else:
