@@ -51,18 +51,6 @@ async def on_message(message):
         except:
             await message.reply('Incorect usage of command, use $help for correct usage')
 
-    if message.content.startswith('$dice'):
-        choice = random.random()
-        if choice <= 0.5:
-            state = 'Loss'
-            emoji = ':x:'
-        if choice > 0.5:
-            state = 'win'
-            emoji = ':white_check_mark:'
-        output = str(round(choice * 100, 2)) + '%'
-        await message.reply(emoji + ' | ' + output)
-    await client.process_commands(message)
-
 @client.command() #ping command
 async def ping(ctx):
     await ctx.send(':ping_pong: | ' + str(round(client.latency,2)) + 'ms')
@@ -95,8 +83,38 @@ async def coinflip(ctx, choice : str = None, amount : float = None):
         await ctx.reply(':coin: | ' + output)
 
 @client.command()
-async def dice(ctx, user_choice : str = None, amount : float = None):
+async def dice(ctx, user_choice : float = None, amount : float = None):
     bot_choice = random.random()
+    if user_choice != None:
+        if amount != None:
+            try:
+                user_choice = 1.0 - (user_choice/100)
+                if user_choice <= bot_choice:
+                    state = 'Loss'
+                    message = 'House wins'
+                    emoji = ':x:'
+                    result = amount * -1.0
+                elif user_choice > bot_choice:
+                    state = 'win'
+                    message = 'Player wins'
+                    emoji = ':white_check_mark:'
+                    result = amount / user_choice
+                output = str(round(choice * 100, 2)) + '%'
+                await message.reply(emoji + ' | ' + message + ' | $' + result)
+            except:
+                await ctx.reply('Incorect usage of command, use $help for correct usage')
+        else:
+            await ctx.reply('Please specifiy a bet wager')
+    else:
+        if choice <= 0.5:
+            state = 'Loss'
+            emoji = ':x:'
+        elif choice > 0.5:
+            state = 'win'
+            emoji = ':white_check_mark:'
+        output = str(round(choice * 100, 2)) + '%'
+        await message.reply(emoji + ' | ' + output)
+
 
 
 client.run(TOKEN)
