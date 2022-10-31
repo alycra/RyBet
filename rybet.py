@@ -82,15 +82,15 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
     if user_choice != None:
         if amount != None:
             try:
-                user_choice = (user_choice/100.0)
-                if bot_choice <= user_choice:
+                user_choice = 1.0 - (user_choice/100.0)
+                if user_choice <= bot_choice:
                     state = 'Loss'
                     emoji = ':x:'
                     result = amount * -1.0
-                elif bot_choice > user_choice:
+                elif user_choice > bot_choice:
                     state = 'win'
                     emoji = ':white_check_mark:'
-                    result = (amount / user_choice) - amount
+                    result = (amount / (1.0-user_choice)) - amount
                 await ctx.reply(':signal_strength: | ' + emoji + " " + output + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
@@ -131,6 +131,7 @@ async def deposit(ctx, user_id: int = None, amount: float = None):
         if user_id != None:
             if amount != None:
                 try:
+                    amount = get_bal(id) + amount
                     statement = "INSERT INTO rybet (id,balance) VALUES (%s, %s)"
                     data = (user_id, amount)
                     conn.commit()
@@ -151,7 +152,7 @@ def get_bal(id):
         data = (id)
         cursor.execute(statement, data)
         for (balance) in cursor:
-            return {balance}
+            return balance
     except:
         print('error getting bal for user' + id)
 
