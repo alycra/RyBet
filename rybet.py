@@ -91,7 +91,7 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
                     state = 'win'
                     emoji = ':white_check_mark:'
                     result = (amount / user_choice) - amount
-                await ctx.reply(':signal_strength: | ' + emoji + ' | $' + str(result))
+                await ctx.reply(':signal_strength: | ' + emoji + " " + bot_choice + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
@@ -101,7 +101,7 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
             emoji = ':x:'
         elif bot_choice > 0.5:
             emoji = ':white_check_mark:'
-        await ctx.reply(':signal_strength: | ' + emoji + ' | ' + output)
+        await ctx.reply(':signal_strength: | ' + emoji + " " + bot_choice + ' | ' + output)
 
 
 @client.command()  # dicethrow
@@ -143,4 +143,17 @@ async def deposit(ctx, user_id: int = None, amount: float = None):
             await ctx.reply('Incorect usage of command, use $help for correct usage')
     else:
         await ctx.reply('Incorrect permissions')
+
+
+def get_bal(id):
+    try:
+        statement = "SELECT balance FROM rybet WHERE id=%s"
+        data = (id)
+        cursor.execute(statement, data)
+        for (balance) in cursor:
+            return {balance}
+    except:
+        print('error getting bal for user' + id)
+
+
 client.run(TOKEN)
