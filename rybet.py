@@ -127,17 +127,20 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
 
 @client.command()  # depo
 async def deposit(ctx, user_id: int = None, amount: float = None):
-    if user_id != None:
-        if amount != None:
-            try:
-                statement = "INSERT INTO rybet (id,balance) VALUES (%s, %s)"
-                data = (user_id, amount)
-                conn.commit()
-                await ctx.reply('Successfully added, current balance: ')
-            except:
-                await ctx.reply('Error adding to database')
+    if ctx.message.author == '762737260617269268'
+       if user_id != None:
+            if amount != None:
+                try:
+                    statement = "INSERT INTO rybet (id,balance) VALUES (%s, %s)"
+                    data = (user_id, amount)
+                    conn.commit()
+                    await ctx.reply('Successfully added, current balance: ')
+                except:
+                    await ctx.reply('Error adding to database')
+            else:
+                await ctx.reply('Please specifiy an amount')
         else:
-            await ctx.reply('Please specifiy an amount')
+            await ctx.reply('Incorect usage of command, use $help for correct usage')
     else:
-        await ctx.reply('Incorect usage of command, use $help for correct usage')
+        await ctx.reply('Incorrect permissions')
 client.run(TOKEN)
