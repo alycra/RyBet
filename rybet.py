@@ -4,13 +4,24 @@ import os
 from dotenv import load_dotenv
 from discord.utils import get
 from discord.ext import commands
+import mysql.connector
 intents = discord.Intents.default()
 intents.message_content = True
 load_dotenv()
 
 
 TOKEN = os.getenv('DISCORD_TOKEN')
-
+try:
+    conn = mariadb.connect(
+        user=os.getenv('DBUSER'),
+        password=os.getenv('DBPASS'),
+        host=localhost,
+        database="rybet"
+    )
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
+cur = conn.cursor()
 ADMIN = '762737260617269268'
 client = commands.Bot(command_prefix='$', intents=intents)
 
@@ -118,7 +129,13 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
 async def deposit(ctx, user_id: int = None, amount: float = None):
     if user_id != None:
         if amount != None:
-            return
+            try:
+                statement = "INSERT INTO rybet (id,balance) VALUES (%s, %s)"
+                data = (user_id, amount)
+                conn.commit()
+                await ctx.reply('Successfully added, current balance: ')
+            except:
+                await ctx.reply('Error adding to database')
         else:
             await ctx.reply('Please specifiy an amount')
     else:
