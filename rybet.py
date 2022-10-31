@@ -87,7 +87,7 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
                 if bot_choice <= user_choice:  # if bot has less, user wins
                     state = 'Win'
                     emoji = ':white_check_mark:'
-                    result = (amount / (1.0-user_choice)) - amount
+                    result = (amount / user_choice) - amount
                 elif bot_choice > user_choice:  # if bot has more, bot wins
                     state = 'loss'
                     emoji = ':x:'
