@@ -83,11 +83,11 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
         if amount != None:
             try:
                 user_choice = 1.0 - (user_choice/100.0)
-                if user_choice <= bot_choice:
+                if bot_choice <= user_choice:
                     state = 'Loss'
                     emoji = ':x:'
                     result = amount * -1.0
-                elif user_choice > bot_choice:
+                elif bot_choice > user_choice:
                     state = 'win'
                     emoji = ':white_check_mark:'
                     result = (amount / (1.0-user_choice)) - amount
