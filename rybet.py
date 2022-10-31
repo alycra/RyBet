@@ -91,7 +91,7 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
                     state = 'win'
                     emoji = ':white_check_mark:'
                     result = (amount / user_choice) - amount
-                await ctx.reply(':signal_strength: | ' + emoji + " " + bot_choice + ' | $' + str(result))
+                await ctx.reply(':signal_strength: | ' + emoji + " " + output + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
@@ -101,7 +101,7 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
             emoji = ':x:'
         elif bot_choice > 0.5:
             emoji = ':white_check_mark:'
-        await ctx.reply(':signal_strength: | ' + emoji + " " + bot_choice + ' | ' + output)
+        await ctx.reply(':signal_strength: | ' + emoji + ' | ' + output)
 
 
 @client.command()  # dicethrow
