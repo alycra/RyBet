@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from discord.utils import get
 from discord.ext import commands
-import mysql.connector
+import mysql.connector as database
 intents = discord.Intents.default()
 intents.message_content = True
 load_dotenv()
@@ -12,13 +12,13 @@ load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 try:
-    conn = mariadb.connect(
+    conn = database.connect(
         user=os.getenv('DBUSER'),
         password=os.getenv('DBPASS'),
         host=localhost,
         database="rybet"
     )
-except mariadb.Error as e:
+except database.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")
     sys.exit(1)
 cur = conn.cursor()
