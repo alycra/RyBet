@@ -15,8 +15,8 @@ try:
     conn = database.connect(
         user=os.getenv('DBUSER'),
         password=os.getenv('DBPASS'),
-        host=localhost,
-        database="rybet"
+        host='localhost',
+        database='rybet'
     )
 except database.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")
