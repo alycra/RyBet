@@ -82,15 +82,16 @@ async def dice(ctx, user_choice: float = None, amount: float = None):
     if user_choice != None:
         if amount != None:
             try:
-                user_choice = 1.0 - (user_choice/100.0)
-                if bot_choice <= user_choice:
-                    state = 'Loss'
-                    emoji = ':x:'
-                    result = amount * -1.0
-                elif bot_choice > user_choice:
-                    state = 'win'
+                # if user input 70, becomes 0.7
+                user_choice = (user_choice/100.0)
+                if bot_choice <= user_choice:  # if bot has less, user wins
+                    state = 'Win'
                     emoji = ':white_check_mark:'
                     result = (amount / (1.0-user_choice)) - amount
+                elif bot_choice > user_choice:  # if bot has more, bot wins
+                    state = 'loss'
+                    emoji = ':x:'
+                    result = amount * -1.0
                 await ctx.reply(':signal_strength: | ' + emoji + " " + output + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
