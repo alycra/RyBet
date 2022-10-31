@@ -128,7 +128,7 @@ async def dicethrow(ctx, user_choice: float = None, amount: float = None):
 @client.command()  # depo
 async def deposit(ctx, user_id: int = None, amount: float = None):
     if ctx.message.author == '762737260617269268':
-       if user_id != None:
+        if user_id != None:
             if amount != None:
                 try:
                     statement = "INSERT INTO rybet (id,balance) VALUES (%s, %s)"
