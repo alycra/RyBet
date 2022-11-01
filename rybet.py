@@ -66,7 +66,7 @@ async def coinflip(ctx, choice: str = None, amount: float = None):
                 else:
                     result = amount * -1.0
                     emoji = ':x:'
-                await ctx.reply(':coin: | ' + emoji + ' | $' + str(result))
+                await ctx.reply(':coin: | ' + emoji + " " + output + ' | $' + str(result))
             except:
                 await ctx.reply('Incorect usage of command, use $help for correct usage')
         else:
